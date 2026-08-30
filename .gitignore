@@ -1,0 +1,5 @@
+# Python キャッシュファイル・ディレクトリ
+__pycache__/
+*.pyc
+*.pyo
+*.pyd

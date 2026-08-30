@@ -4,7 +4,7 @@ import './index.css'
 
 export default function App() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-[#110F1A]">
       <h1 className="text-3xl font-bold text-blue-600 underline">
         画面の表示に成功しました！
       </h1>

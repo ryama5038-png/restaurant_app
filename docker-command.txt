@@ -1,0 +1,12 @@
+コンテナイメージをビルド →　docker compose build
+コンテナを起動　→ docker compose up -d
+コンテナをダウン　→ docker compose down -v(-vにより、ボリュームも削除)
+Dockerコンテナ内で、インストールされているPythonライブラリｍｐパッケージ一覧と、そのバージョンを表示する
+→ docker compose exec 対象となるコンテナ名(このプロジェクトではbackend) pip instal
+例: docker compose exec backend pip freeze
+
+docker の中にライブラリ等をインストールする → docker compose exec コンテナのサービス名 インストールコマンド
+例: docker compose exec frontend npm install axios
+    docker compose exec backend pip install pydanic
+
+
