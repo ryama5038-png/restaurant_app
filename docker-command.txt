@@ -1,6 +1,11 @@
 コンテナイメージをビルド →　docker compose build
 コンテナを起動　→ docker compose up -d
 コンテナをダウン　→ docker compose down -v(-vにより、ボリュームも削除)
+コンテナを再ビルドし、起動 → docker compose up -d --build
+コンテナ内の古いキャッシュを捨てて、ビルド → docker compose build --no-cache サービス名
+コンテナの起動状態を確認 → docker compose ps
+停止しているコンテナも含め、Docker-composeで管理されているすべてのコンテナのステータスを取得 → docker compose ps -a
+コンテナ名または CONTAINER ID を指定して停止 → docker stop <古いコンテナ名またはID>
 Dockerコンテナ内で、インストールされているPythonライブラリｍｐパッケージ一覧と、そのバージョンを表示する
 → docker compose exec 対象となるコンテナ名(このプロジェクトではbackend) pip instal
 例: docker compose exec backend pip freeze
@@ -8,5 +13,11 @@ Dockerコンテナ内で、インストールされているPythonライブラ�
 docker の中にライブラリ等をインストールする → docker compose exec コンテナのサービス名 インストールコマンド
 例: docker compose exec frontend npm install axios
     docker compose exec backend pip install pydanic
+
+コンテナないのbashに移動する → docker compose exec コンテナのサービス名 bash
+
+コンテナのbashを抜けて、ローカル環境に戻る → exit
+
+
 
 
