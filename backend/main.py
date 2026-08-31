@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
@@ -66,8 +66,10 @@ async def create_post(post: PostCreate):
 
 # 【2】投稿一覧の取得（「もっと見る」対応のページネーション）
 @app.get("/api/posts", response_model=List[PostResponse])
-async def get_posts(limit: int = 3, offset: int = 0):
-    # SQLを直接記述
+async def get_posts(
+    limit: int = Query(default=5, ge=1),   # デフォルト 5 件
+    offset: int = Query(default=0, ge=0)   # デフォルト 0 (1ページ目)
+):
     query = """
         SELECT id, title, content, created_at
         FROM posts
@@ -76,6 +78,6 @@ async def get_posts(limit: int = 3, offset: int = 0):
     """
     values = {"limit": limit, "offset": offset}
     
-    # fetch_all で複数件を取得
+    # データベースから取得して返却
     posts = await database.fetch_all(query=query, values=values)
     return posts
