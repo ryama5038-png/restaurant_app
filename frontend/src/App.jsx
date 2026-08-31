@@ -1,43 +1,88 @@
-function App() {
+import { useState, useEffect } from 'react'
+
+export default function App() {
+  const [info, setInfo] = useState(null)
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // APIから店舗情報とお知らせを同時に取得
+    Promise.all([
+      fetch('http://localhost:8000/api/info').then((res) => res.json()),
+      fetch('http://localhost:8000/api/posts').then((res) => res.json())
+    ])
+      .then(([infoData, postsData]) => {
+        setInfo(infoData)
+        setPosts(postsData)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error('Failed to fetch data:', err)
+        setLoading(false)
+      })
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-gray-600">
+        読み込み中...
+      </div>
+    )
+  }
+
   return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center p-4">
-      {/* 1. React の動作確認カード */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 max-w-sm w-full text-center shadow-xl space-y-4">
-        
-        {/* インジケーター（点滅アニメーション） */}
-        <div className="flex items-center justify-center gap-2">
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-          </span>
-          <span className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">
-            System Online
-          </span>
-        </div>
+    <div className="min-h-screen bg-slate-50 text-slate-800">
+      {/* ヒーローヘッダー */}
+      <header className="bg-slate-900 text-white py-16 px-4 text-center">
+        <h1 className="text-4xl font-bold tracking-wide mb-2">{info?.name}</h1>
+        <p className="text-slate-400 max-w-xl mx-auto">{info?.description}</p>
+      </header>
 
-        <h1 className="text-2xl font-bold text-white tracking-wide">
-          Restaurant app
-        </h1>
-        
-        <p className="text-slate-400 text-sm">
-          React + Vite + Tailwind CSS の接続テスト画面です。
-        </p>
+      {/* メインコンテンツ */}
+      <main className="max-w-4xl mx-auto px-4 py-10 space-y-12">
+        {/* お知らせ・投稿セクション */}
+        <section>
+          <h2 className="text-2xl font-bold mb-6 border-b-2 border-amber-500 pb-2">
+            お知らせ・新着情報
+          </h2>
+          <div className="space-y-4">
+            {posts.map((post) => (
+              <article key={post.id} className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-lg font-semibold text-slate-900">{post.title}</h3>
+                  <span className="text-sm text-slate-400">{post.date}</span>
+                </div>
+                <p className="text-slate-600 leading-relaxed">{post.content}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-        {/* 2. Tailwind CSS（グラデーション・ホバー効果）のテストボタン */}
-        <button 
-          onClick={() => alert("React のイベント（JavaScript）も正常に動作しています！")}
-          className="w-full py-2.5 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium rounded-lg text-sm transition-all duration-200 shadow-md active:scale-95 cursor-pointer"
-        >
-          動作テスト（クリック）
-        </button>
-      </div>
-
-      {/* 3. 足元のミニステータス */}
-      <div className="mt-6 text-slate-500 text-xs font-mono">
-        Status: 200 OK | Host: 0.0.0.0:3000
-      </div>
+        {/* 店舗情報セクション */}
+        <section className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+          <h2 className="text-2xl font-bold mb-6 border-b-2 border-amber-500 pb-2">
+            店舗情報
+          </h2>
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div>
+              <dt className="font-semibold text-slate-500">住所</dt>
+              <dd className="mt-1 text-slate-800">{info?.address}</dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-slate-500">電話番号</dt>
+              <dd className="mt-1 text-slate-800">{info?.phone}</dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-slate-500">営業時間</dt>
+              <dd className="mt-1 text-slate-800">{info?.hours}</dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-slate-500">定休日</dt>
+              <dd className="mt-1 text-slate-800">{info?.closed}</dd>
+            </div>
+          </dl>
+        </section>
+      </main>
     </div>
   )
 }
-
-export default App
