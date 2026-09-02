@@ -56,7 +56,7 @@ function Home() {
             素材の命を織りなす、<br />心温まるひとときを。
           </h1>
           <p className="text-stone-300 text-sm md:text-base pt-2">
-            旬の地場食材と、本場イタリアの技法が生み出す創作ディナー
+            旬の地場食材と本場イタリアの技法が生み出す創作ディナー
           </p>
         </div>
       </header>

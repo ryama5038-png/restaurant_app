@@ -25,8 +25,8 @@ function Admin() {
 
   return (
     <div style={{ maxWidth: '600px', margin: '40px auto', padding: '20px' }}>
-      <h2>管理者用 お知らせ投稿</h2>
-      <p><Link to="/">← トップページへ戻る</Link></p>
+      <h2 className='text-2xl text-center border border-[#BBC8CE] py-3 mb-3 rounded-xl'>管理者用 お知らせ投稿</h2>
+      <p className='font-mono p-2 mt-2 hover:text-[#FC1D08] mb-4 text-center'><Link to="/">← トップページへ戻る</Link></p>
 
       {message && <p style={{ color: message.includes('成功') ? 'green' : 'red' }}>{message}</p>}
 
@@ -39,6 +39,7 @@ function Admin() {
             onChange={(e) => setTitle(e.target.value)}
             required
             style={{ width: '100%', padding: '8px', fontSize: '16px' }}
+            className='border border-[#000000] p-3 rounded'
           />
         </div>
         <div>
