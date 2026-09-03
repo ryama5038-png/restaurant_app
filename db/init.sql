@@ -26,5 +26,7 @@ CREATE TABLE IF NOT EXISTS admins (
 INSERT INTO admins (username, hashed_password)
 VALUES (
     'admin',
-    '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeg6Lruj3vjPGga31lW'
+    '$2b$12$Cb0ELYcP6Qb0w9yslOv3Peup6YRdlbf3C7efPVXtkQG7MkqylJnki'
 ) ON CONFLICT (username) DO NOTHING;
+
+ALTER TABLE posts ADD COLUMN IF NOT EXISTS image_url VARCHAR(255);
