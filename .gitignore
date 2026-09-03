@@ -3,3 +3,8 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+# uploads フォルダ内のすべてのファイルを Git 管理から除外
+backend/uploads/*
+
+# ただしフォルダ自体を保持するための .gitkeep だけは例外として残す
+!backend/uploads/.gitkeep
