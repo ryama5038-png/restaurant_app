@@ -82,7 +82,6 @@ function Home() {
           <div className="grid md:grid-cols-3 gap-6">
             {/* メニューカード 1 */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-stone-200/80">
-              {/* 後で写真を入れられるダミー領域 */}
               <div className="h-40 bg-stone-200 flex items-center justify-center text-stone-400 text-xs font-serif">
                 [ Photo: パスタ ]
               </div>
@@ -131,15 +130,28 @@ function Home() {
 
           <div className="divide-y divide-stone-100">
             {posts.map((post) => (
-              <article key={post.id} className="py-5 first:pt-0 last:pb-0 space-y-2">
+              <article key={post.id} className="py-5 first:pt-0 last:pb-0 space-y-3">
                 <div className="flex items-center space-x-3">
                   <span className="text-xs font-mono bg-stone-100 text-stone-600 px-2 py-0.5 rounded">
                     {new Date(post.created_at).toLocaleDateString()}
                   </span>
                 </div>
+
                 <h3 className="text-lg font-bold text-stone-800 hover:text-amber-600 transition">
                   {post.title}
                 </h3>
+
+                {/* 画像が存在する場合は描画 */}
+                {post.image_url && (
+                  <div className="my-3 overflow-hidden rounded-lg border border-stone-200 max-w-md">
+                    <img
+                      src={`http://localhost:8000${post.image_url}`}
+                      alt={post.title}
+                      className="w-full h-auto object-cover max-h-60"
+                    />
+                  </div>
+                )}
+
                 <p className="text-stone-600 text-sm leading-relaxed whitespace-pre-wrap">
                   {post.content}
                 </p>
