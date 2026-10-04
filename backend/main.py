@@ -16,6 +16,7 @@ SECRET_KEY = "YOUR_SUPER_SECRET_KEY_HERE"  # 本番環境では環境変数化�
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
+#フロントエンドから送信されたurlから、Bearerヘッダーを読み込んで抽出する。
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/login")
 
 app = FastAPI()

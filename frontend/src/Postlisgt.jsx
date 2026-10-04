@@ -10,7 +10,7 @@ function PostList() {
     const offset = (page - 1) * LIMIT;
 
     // Axios によるデータ取得
-    axios.get('http://localhost:8000/api/posts', {
+      axios.get('http://localhost:8000/api/posts', {
       params: {
         limit: LIMIT,
         offset: offset

@@ -7,7 +7,7 @@ function Home() {
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(true);
   const LIMIT = 5;
-
+  //useeffect関数によるページ数監視。pagestateを監視し、変更があった場合に、第一引数の関数を実行
   useEffect(() => {
     fetchPosts(page);
   }, [page]);
