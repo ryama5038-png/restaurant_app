@@ -8,3 +8,9 @@ backend/uploads/*
 
 # ただしフォルダ自体を保持するための .gitkeep だけは例外として残す
 !backend/uploads/.gitkeep
+
+# テスト・ビルド成果物
+.pytest_cache/
+build/
+dist/
+*.egg-info/

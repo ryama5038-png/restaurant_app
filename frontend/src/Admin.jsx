@@ -24,6 +24,7 @@ function Admin() {
     setLoading(true);
 
     const params = new URLSearchParams();
+    //URLSearchParamsはjsに標準で組み込まれたURL のクエリ文字列やフォーム用データを簡単に組み立て・操作するための便利なオブジェクト
     params.append('username', username);
     params.append('password', password);
 

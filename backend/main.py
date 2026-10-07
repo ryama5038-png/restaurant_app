@@ -33,6 +33,7 @@ app.add_middleware(
 # --- 画像保存ディレクトリの設定と静的ファイル配信 ---
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+#指定したフォルダ(uploads)がローカル上に存在しない場合に自動作成、exist_ok=Trueによって、既にファイルが存在していてもFileExistsErrorを発生させず、スルーする。
 # /uploads/ファイル名 で画像にアクセスできるようにする
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
@@ -88,6 +89,7 @@ async def get_current_admin(token: str = Depends(oauth2_scheme)):
     try:
         # トークンをデコードし、usernameをパースする
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        #Bearerトークンの中にはsolt情報が含まれるため、keyとアルゴリズム情報のみでデコード可能
         username: str = payload.get("sub")
 
         if username is None:
@@ -150,6 +152,7 @@ async def create_post(
     title: str = Form(...),
     content: str = Form(...),
     image: Optional[UploadFile] = File(None),  # Union[UploadFile, str] ではなく UploadFile 単体にする
+    #Uploadingクラスは、fastAPIでバイナリファイルを受信するための標準クラス
     current_admin: dict = Depends(get_current_admin)
 ):
 
@@ -158,6 +161,7 @@ async def create_post(
     # image が存在し、ファイル名が空でない場合のみ画像を保存
     if image and image.filename and image.filename.strip() != "":
         file_extension = os.path.splitext(image.filename)[1]
+        #このコードによって、ファイル名と拡張子が分離した要素数2のタプルが作成される。
         unique_filename = f"{uuid.uuid4()}{file_extension}"
         file_path = os.path.join(UPLOAD_DIR, unique_filename)
 
